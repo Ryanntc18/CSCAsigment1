@@ -55,7 +55,7 @@ app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
 
 
 const app2 = new Clarifai.App({
-apiKey: '8f3427184e5d404bb90d83b555b01f8a'
+apiKey: 'Clarifai API KEY'
 });
 console.log("testing phase:");
 
