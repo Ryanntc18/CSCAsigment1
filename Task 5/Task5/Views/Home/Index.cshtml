@@ -1,0 +1,119 @@
+﻿<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</head>
+<body>
+
+    
+    <h1>Task 5 (Upload to Amazon)</h1>
+    <form action="https://zwawsbucket.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="key" value="${filename}" /><br />
+        <input type="hidden" name="acl" value="public-read" />
+        <input type="hidden" name="success_action_redirect" value="http://localhost:50031/Home/Secondpage" />
+
+        <input type="hidden" name="Content-Type" value="image/jpeg" /><br />
+        <input type="hidden" name="x-amz-meta-uuid" value="14365123651274" />
+        <input type="hidden" name="x-amz-server-side-encryption" value="AES256" />
+
+        <input type="file" name="file" id="inputFile" />
+        <div class="image-preview" id="imagePreview">
+            <img src="" alt="Image Preview" class="image-preview__image" />
+            <span class="image-preview__default-text">Image Preview</span>
+        </div>
+        <!-- The elements after this will be ignored -->
+        <input type="submit" name="submit" value="Upload to Amazon S3" />
+    </form>
+
+</body>
+@section scripts{
+
+    <style>
+        .image-preview {
+            width: 300px;
+            min-height: 100px;
+            border: 2px solid #dddddd;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #cccccc;
+        }
+
+        .image-preview__image {
+            display: none;
+            width: 100%;
+        }
+
+    </style>
+
+    <script>
+        //This script configures the image preview
+        const inputFile = document.getElementById("inputFile");
+        const previewContainer = document.getElementById("imagePreview");
+        const previewImage = previewContainer.querySelector(".image-preview__image");
+        const previewDefaultText = previewContainer.querySelector(".image-preview__default-text");
+
+        inputFile.addEventListener("change", function () {
+            const file = this.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                previewDefaultText.style.display = "none";
+                previewImage.style.display = "block";
+
+                reader.addEventListener("load", function () {
+                    previewImage.setAttribute("src", this.result);
+                });
+
+                reader.readAsDataURL(file);
+            } else {
+                previewDefaultText.style.display = null;
+                previewImage.style.display = null;
+                previewImage.setAttribute("src", "");
+            }
+        });
+    </script>
+d
+
+}
+
+
+@*<div class="card">
+
+        <div class="card-body" style="padding:3% 6%">
+
+
+            <form id="dataForm">
+                <label for="rateInput" class="font-small font-weight-medium">
+                    Task 5 (Upload to Amazon S3)
+                </label>
+                <div class="form-group col-md-12">
+                    <label for="rateInput" class="font-small font-weight-medium">
+                        Upload image
+                    </label>
+                    <input type="file" id="myFile" name="filename">
+
+
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="control-label col-md-1"></label>
+                    <div class="float-right">
+                        <button type="button" id="saveButton" class="btn btn-primary">
+                            Submit
+                        </button>
+                        <button type="button" class="btn btn-light"
+                                onclick="javascript:history.back()">
+                            Back
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div><!-- end of div element which has the class="card-body" -->
+    </div><!-- end of the div element which has the class="card" -->*@

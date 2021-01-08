@@ -1,0 +1,87 @@
+﻿<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+
+    <h1>Task 5 (Upload to Amazon) Secondpage</h1>
+    <h2>Your file has been uploaded!</h2>
+    <h3> Your file's current link is</h3>
+
+    <input type="text" name="linkBox" id="linkBox" value="" />
+    <h3>Shorten link by submitting to bitly?</h3>
+    <input type="button" name="submitButton" id="submitButton" value="Submit to Bitly" />
+    <h4>This is your Bitly link</h4>
+    <input type="text" name="linkBox2" id="linkBox2" value="" />
+
+
+</body>
+@section scripts{
+
+    <style>
+
+        input[type=text] {
+            padding: 5px;
+            border: 2px solid #ccc;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            width: 100%;
+        }
+    </style>
+
+    <script>
+        //This script configures the image preview
+        var key = getUrlVars()["key"];
+        
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+
+        };
+
+        fillLink()
+        function fillLink() {
+            document.getElementById("linkBox").value = "https://zwawsbucket.s3.amazonaws.com/" + key
+        }
+
+        var settings = {
+            "url": "https://api-ssl.bitly.com/v4/shorten",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer 48fec13c86593cd95dc6e172a7f3ceb86ace176f"
+            },
+            "data": JSON.stringify({ "domain": "bit.ly", "long_url": "https://zwawsbucket.s3.amazonaws.com/" + key }),
+        };
+
+        
+        
+        $('#submitButton').on('click', function () {
+            console.log(settings);
+            if (key != undefined) {
+                $.ajax(settings).done(function (response) {
+                    console.log(response);
+                    fillLink2();
+                    function fillLink2() {
+                        document.getElementById("linkBox2").value = response.link;
+                    };
+                });
+            }; 
+        });
+
+        //$.ajax(settings).done(function (response) {
+        //    console.log(response);
+        //});
+
+    </script>
+
+
+
+}

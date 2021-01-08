@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+
+
+<div class="jumbotron">
+    <h1>AJAX Weather call.</h1>
+
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h4>Singapore's Weather</h4>
+        <img id="loading" src="/loading.gif" alt="Updating ..." style="display: block;" />
+        <p id="text1"></p>
+        <p id="text2"></p>
+        <p id="text3"></p>
+    </div>
+
+
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+       $.get("https://api.data.gov.sg/v1/environment/24-hour-weather-forecast", function(data, status){
+
+         if(data != null){
+            var image_x = document.getElementById('loading');
+            loading.parentNode.removeChild(loading);
+        }
+
+        var weatherData = data.items[0];
+        console.log(weatherData)
+
+        var text1 = document.getElementById("text1");
+        var z = document.createElement('p');
+        z.innerHTML = "Date: " + weatherData.timestamp;
+        text1.appendChild(z);
+
+        var text2 = document.getElementById("text2");
+        var z = document.createElement('p');
+        z.innerHTML = "Weather: " + weatherData.general.forecast;
+        text2.appendChild(z);
+
+        var text3 = document.getElementById("text3");
+        var z = document.createElement('p');
+        z.innerHTML = "Highest Temperature: " + weatherData.general.temperature.high + "<br> Lowest Temperature: " + weatherData.general.temperature.low;
+        text3.appendChild(z);
+
+      });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+}

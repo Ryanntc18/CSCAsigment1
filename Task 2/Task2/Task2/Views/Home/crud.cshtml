@@ -1,0 +1,225 @@
+﻿
+@{
+    ViewBag.Title = "crud";
+}
+@section Scripts{
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+
+        var uri = '/api/v3/products';
+
+        $(document).ready(function () {
+            // Send an AJAX request
+            $.getJSON(uri)
+                .done(function (data) {
+                    // On success, 'data' contains a list of products.
+                    $.each(data, function (key, item) {
+                        // Add a list item for the product.
+                        $('<li>', { text: formatItem(item) }).appendTo($('#products'));
+                        console.log(data);
+                    });
+                });
+
+
+        });
+
+        function formatItem(item) {
+            return item.Id + ', ' + item.Name + ', ' + item.Category + ': $' + item.Price;
+        }
+
+        function showAll(a) {
+            $("#loadinggif").prop("hidden", true);
+            $("#view").prop("hidden", false);
+
+
+            if (a == 1) {
+                $("button").prop("disabled", false);
+            };
+
+
+        }
+
+        function displayload() {
+            $("#loadinggif").prop("hidden", false);
+            $("#view").prop("hidden", true);
+        }
+
+        function find() {
+            displayload();
+            var id = $('#prodId').val();
+            $.getJSON(uri + '/' + id)
+                .done(function (data) {
+                    $('#product').text(formatItem(data));
+                    showAll(0);
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#product').text('Error: ' + err);
+                    showAll(0);
+                });
+        }
+
+        function create() {
+            displayload();
+            var name = $('#CprodName').val();
+            var cat = $('#CprodCat').val();
+            var price = $('#CprodPrice').val();
+
+            var item = {
+                Name: name,
+                Category: cat,
+                Price: price
+            }
+
+            console.log(item);
+
+            $.ajax({
+                type: "POST",
+                url: uri,
+                data: item,
+                dataType: "json"
+            })
+                .done(function (data) {
+                    alert("Product added: " + item.Name);
+                    window.location.reload();
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    alert("Product failed to add, error msg: " + err);
+                    window.location.reload();
+                });
+
+        }
+
+        function update() {
+            displayload();
+            var id = $('#UprodId').val();
+            var name = $('#UprodName').val();
+            var cat = $('#UprodCat').val();
+            var price = $('#UprodPrice').val();
+
+            var item = {
+                Name: name,
+                Category: cat,
+                Price: price
+            }
+
+            console.log(item);
+
+            $.ajax({
+                type: "PUT",
+                url: uri + "/" + id,
+                data: item,
+                dataType: "json"
+            })
+                .done(function (data) {
+                    alert("Updated Product to:" + item.Name);
+                    window.location.reload();
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    alert("Failed to Update product, error msg:" + err);
+                    window.location.reload();
+                });
+        }
+
+        function del() {
+            displayload();
+            var id = $('#DprodId').val();
+
+            $.ajax({
+                type: "DELETE",
+                url: uri + "/" + id,
+                dataType: "json"
+            })
+                .done(function (data) {
+                    alert("Deleted Product:" + id);
+                    window.location.reload();
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    alert("Failed to Product, error message: " + err);
+                    window.location.reload();
+                });
+        }
+
+    </script>
+}
+
+<h2>crud</h2>
+
+<img id="loadinggif" src="/loading.gif" alt="Loading" hidden />
+
+<div id="view">
+    <div>
+        <h2>All Products</h2>
+        <ul id="products" />
+    </div>
+
+    <!--Find proudct-->
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="prodId" size="5" />
+        <input type="button" value="Search" onclick="find();" />
+        <p id="product" />
+    </div>
+
+    <!--Add product-->
+    <div>
+        <h2>Add Product</h2>
+        <div class="row">
+            <div class="col-lg-11">
+                <label for="CprodName">Product Name: </label>
+                <input type="text" id="CprodName" size="5" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-11">
+                <label for="CprodCat">Product Category: </label><input type="text" id="CprodCat" size="10" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-11">
+                <label for="CprodPrice">Product Price: </label>
+                <input type="text" id="CprodPrice" size="5" />
+            </div>
+        </div>
+        <input type="button" value="Create" onclick="create();" />
+        <p id="CMsg" />
+    </div>
+
+    <!--Update proudct-->
+    <div>
+        <h2>Update Product by ID</h2>
+        <div class="row">
+            <div class="col-lg-11">
+                <label for="UprodId">Product Id: </label>
+                <input type="text" id="UprodId" size="5" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-11">
+                <label for="UprodName">Product Name: </label>
+                <input type="text" id="UprodName" size="5" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-11">
+                <label for="UprodCat">Product Category: </label><input type="text" id="UprodCat" size="10" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-11">
+                <label for="UprodPrice">Product Price: </label>
+                <input type="text" id="UprodPrice" size="5" />
+            </div>
+        </div>
+        <input type="button" value="Update" onclick="update();" />
+        <p id="UMsg" />
+    </div>
+
+    <!--Delete proudct-->
+    <div>
+        <h2>Delete by ID</h2>
+        <input type="text" id="DprodId" size="5" />
+        <input type="button" value="Delete" onclick="del();" />
+        <p id="product" />
+    </div>
+
+</div>
