@@ -20,8 +20,8 @@ namespace CSCTask6.Controllers
     {
         IFirebaseConfig config = new FirebaseConfig
         {
-            AuthSecret = "02igQ44z8HsHe2Ufq01IbBNfbVBdq6EUhI7aeynB",
-            BasePath = "https://csctask6-default-rtdb.firebaseio.com/"
+            AuthSecret = "AuthKEY",
+            BasePath = "BasePath"
         };
 
         IFirebaseClient client;

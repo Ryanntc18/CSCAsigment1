@@ -19,7 +19,7 @@ namespace CSCTask6
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            StripeConfiguration.ApiKey = "sk_test_51I5B7mLaXDcHpE2BKAPeNbNK9ZiHUVIaTI6D6YuXe1Mloa2F3GiIGXG0piKKs2vROyem94HywDr9ysJK0I8w0NRk00SZjaoGWh";
+            StripeConfiguration.ApiKey = "Stripe API KEY";
             
         }
     }

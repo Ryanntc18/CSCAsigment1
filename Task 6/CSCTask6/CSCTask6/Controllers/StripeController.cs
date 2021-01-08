@@ -21,8 +21,8 @@ namespace CSCTask6.Controllers
 
         IFirebaseConfig config = new FirebaseConfig
         {
-            AuthSecret = "02igQ44z8HsHe2Ufq01IbBNfbVBdq6EUhI7aeynB",
-            BasePath = "https://csctask6-default-rtdb.firebaseio.com/"
+            AuthSecret = "AuthKey",
+            BasePath = "BasePath"
         };
 
         IFirebaseClient client;
@@ -33,7 +33,7 @@ namespace CSCTask6.Controllers
         [Route("api/paysub")]
         public async Task<string> createSubsAsync()
         {
-            StripeConfiguration.ApiKey = "sk_test_51I5B7mLaXDcHpE2BKAPeNbNK9ZiHUVIaTI6D6YuXe1Mloa2F3GiIGXG0piKKs2vROyem94HywDr9ysJK0I8w0NRk00SZjaoGWh";
+            StripeConfiguration.ApiKey = "Stripe API KEY";
             Trace.WriteLine("Pay for a sub");
 
             var options = new SessionCreateOptions
@@ -113,7 +113,7 @@ namespace CSCTask6.Controllers
         {
             var msg = "failed to create account";
 
-            StripeConfiguration.ApiKey = "sk_test_51I5B7mLaXDcHpE2BKAPeNbNK9ZiHUVIaTI6D6YuXe1Mloa2F3GiIGXG0piKKs2vROyem94HywDr9ysJK0I8w0NRk00SZjaoGWh";
+            StripeConfiguration.ApiKey = "Stripe API KEY";
 
             var options = new AccountCreateOptions
             {
@@ -150,7 +150,7 @@ namespace CSCTask6.Controllers
         {
             var msg = "failed to create Subscription";
 
-            StripeConfiguration.ApiKey = "sk_test_51I5B7mLaXDcHpE2BKAPeNbNK9ZiHUVIaTI6D6YuXe1Mloa2F3GiIGXG0piKKs2vROyem94HywDr9ysJK0I8w0NRk00SZjaoGWh";
+            StripeConfiguration.ApiKey = "Stripe API KEY";
 
             var options = new SubscriptionCreateOptions
             {
@@ -186,7 +186,7 @@ namespace CSCTask6.Controllers
         {
             var msg = "Failed to upgrade account";
 
-            StripeConfiguration.ApiKey = "sk_test_51I5B7mLaXDcHpE2BKAPeNbNK9ZiHUVIaTI6D6YuXe1Mloa2F3GiIGXG0piKKs2vROyem94HywDr9ysJK0I8w0NRk00SZjaoGWh";
+            StripeConfiguration.ApiKey = "Stripe API KEY";
 
             var service = new SubscriptionService();
             Trace.WriteLine("Sub id in update: "+sub.Id);
@@ -247,7 +247,7 @@ namespace CSCTask6.Controllers
 
             // Set your secret key. Remember to switch to your live secret key in production!
             // See your keys here: https://dashboard.stripe.com/account/apikeys
-            StripeConfiguration.ApiKey = "sk_test_51I5B7mLaXDcHpE2BKAPeNbNK9ZiHUVIaTI6D6YuXe1Mloa2F3GiIGXG0piKKs2vROyem94HywDr9ysJK0I8w0NRk00SZjaoGWh";
+            StripeConfiguration.ApiKey = "Stripe API KEY";
 
             var service = new SubscriptionService();
             var cancelOptions = new SubscriptionCancelOptions

@@ -18,7 +18,7 @@ public class WebhookController : ApiController
 
     IFirebaseConfig config = new FirebaseConfig
     {
-        AuthSecret = "02igQ44z8HsHe2Ufq01IbBNfbVBdq6EUhI7aeynB",
+        AuthSecret = "Firebase Auth Key",
         BasePath = "https://csctask6-default-rtdb.firebaseio.com/"
     };
 
